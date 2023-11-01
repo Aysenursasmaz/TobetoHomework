@@ -16,18 +16,22 @@ public class ProductController{
 
     }
     @PostMapping
-    public void addProduct(@RequestBody Product product){
+    public void addProduct(@RequestBody Product product) {
         boolean isUnique = true;
-        for (Product product1:productList) {
-            if (product1.getId()== product.getId()){
-
+        for (Product product1 : productList) {
+            if (product1.getId() == product.getId()) {
+                isUnique = false;
+                break;
             }
-            else {isUnique= false;break;}
         }
-        if (isUnique){
+        if (isUnique) {
             productList.add(product);
+
+
+        } else {
+            throw new RuntimeException("it is not unique");
         }
-        else { throw new RuntimeException("it is not unique");}
+
     }
     @GetMapping("{id}")
     public Product getProductById (@PathVariable int id ){
